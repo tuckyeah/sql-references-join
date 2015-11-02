@@ -5,5 +5,5 @@
 
 -- ALTER TABLE people RENAME COLUMN middle_initial TO middle_name;
 
-ALTER TABLE people ADD COLUMN place_id INTEGER REFERENCES places(id);
-
+ALTER TABLE people
+ADD COLUMN place_id INTEGER REFERENCES places(id);

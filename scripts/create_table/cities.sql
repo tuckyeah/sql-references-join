@@ -1,8 +1,10 @@
 -- create a table to store information about cities
-CREATE TABLE places(id SERIAL PRIMARY KEY,
-                    number INTEGER,
-                    street TEXT,
-                    city TEXT,
-                    state TEXT,
-                    country TEXT,
-                    postal_code TEXT);
+CREATE TABLE cities(
+  id SERIAL PRIMARY KEY,
+  population INTEGER,
+  name CHARACTER VARYING,
+  country CHARACTER VARYING,
+  region CHARACTER VARYING,
+  longitude NUMERIC(6,3),
+  latitude NUMERIC(5,3)
+);
