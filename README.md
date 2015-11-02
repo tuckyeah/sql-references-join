@@ -225,7 +225,7 @@ People
 
 #### Code along
 
-Cities
+We'll change the type of the columns longitude and latitude in cities.
 
 #### Practice
 
