@@ -6,5 +6,5 @@ CREATE TABLE people(
   gender CHARACTER VARYING(1),
   height INTEGER,
   weight INTEGER,
-  dob DATE
+  born_on DATE
 );
