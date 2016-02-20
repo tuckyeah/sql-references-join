@@ -38,9 +38,9 @@ There are a number of standard cardinalities for relationships:
 The last two are more frequently called 1-to-many and many-to-many.
 We'll look at this last type of relationship in a following lesson.
 
-## Create a database
+## Create a Database
 
-### Code along
+### Code Along : Create a Database
 
 We'll use `sql-join` as the working database.  We'll create it using the **[CREATE DATABASE](http://www.postgresql.org/docs/9.4/static/sql-createdatabase.html)** command with `sql-crud` specified as the template.
 
@@ -61,7 +61,7 @@ sql-join=>
 
 ---
 
-## Create a foreign key
+## Create a Foreign Key
 
 We'll use the convention that a foreign key should be named for the singular of
  the table referenced with the column referenced appended after an underscore.
@@ -83,24 +83,24 @@ So, if we're adding a reference to the `cities` table and its `id` column we'll
  detailed documentation of PostgreSQL's version of the
   SQL `CREATE INDEX` command.
 
-### Demonstration
+### Demo : Create a Foreign Key
 
 We'll add a place of birth to people which references a city in the city table.
 We'll use born_in_id as the column name, rather than city_id,
  as this is a more semantic name for the column.
 
-### Code along
+### Code Along : Create a Foreign Key
 
 We'll create an addresses table which references the cities table.
 Then we'll add a reference from the people table to the addresses table.
 
-### Practice
+### Practice : Create a Foreign Key
 
 We'll add an owner reference to the pets table.
 
 ---
 
-## Creating explicit relationships between rows in different tables
+## Explicit Relationships Between Different Tables
 
 We'll update or insert rows with appropriate values.
 Note that a foreign key constraint will disallow invalid values
@@ -112,24 +112,24 @@ Note that a foreign key constraint will disallow invalid values
  detailed documentation of PostgreSQL's version of the
   SQL `INSERT INTO` command.
 
-### Demonstration
+### Demo : Explicit Relationships Between Different Tables
 
 We'll set the place of birth for some people.
 
-### Code along
+### Code Along : Explicit Relationships Between Different Tables
 
 We'll insert an address associated with Somerville.
 Then we'll bulk load addresses and connect some of them to cities.
 After that, we'll set some people's current addresses.
 
-### Practice
+### Practice : Explicit Relationships Between Different Tables
 
 We'll set the owner reference for some pets.
 Pick at least two people to be folks with too many pets.
 
 ---
 
-## Retrieving rows from two related tables
+## Retrieving Rows Across Related Tables
 
 The `join` allows queries to return associated data from two tables as
  a single row.
@@ -139,17 +139,17 @@ The `join` allows queries to return associated data from two tables as
 -   [SELECT](http://www.postgresql.org/docs/9.4/static/sql-select.html) -
  detailed documentation of PostgreSQL's version of the SQL `SELECT` command.
 
-### Demonstration
+### Demo : Retrieving Rows Across Related Tables
 
 We'll count all the people by place of birth.
 Then we'll look at information about people born in a particular city or cities.
 
-### Code along
+### Code Along : Retrieving Rows Across Related Tables
 
 We'll query people, the associated addresses,
  and the cities associated with those addresses.
 
-### Practice
+### Practice : Retrieving Rows Across Related Tables
 
 Let's check for hoarders.
 That's anyone with more than 3 dogs, 4 birds, 5, cats, or 20 fish.
