@@ -113,24 +113,31 @@ including **1 to (0 or 1)**, **1 to (0+)**, and **(0+) to (0+)**.
 The last two are frequently called 'one-to-many' and 'many-to-many';
 we'll look at the first of these now, and the second in later materials.
 
-## Create a Database
+## Setup
 
 ### Code Along : Create a Database
 
-We'll use `sql-join` as the working database.  We'll create it using the **[CREATE DATABASE](http://www.postgresql.org/docs/9.4/static/sql-createdatabase.html)** command with `sql-crud` specified as the template.
+Let's create a working database for the next few exercises
+  using the **[CREATE DATABASE](http://www.postgresql.org/docs/9.4/static/sql-createdatabase.html)** command;
+  we'll name it `sql-join`, and base it on the
+  `sql-crud` database from the previous SQL material.
+
+**bash**
 
 ```bash
 psql
 ```
 
+**psql**
+
 ```sql
 psql (9.4.5)
 Type "help" for help.
 
-and=> CREATE DATABASE "sql-join" TEMPLATE "sql-crud";
+wdi=> CREATE DATABASE "sq-join" TEMPLATE "sql-crud";
 CREATE DATABASE
-and=> \c sql-join
-You are now connected to database "sql-join" as user "and".
+wdi=> \c sql-join
+You are now connected to database "sql-join" as user "wdi".
 sql-join=>
 ```
 
