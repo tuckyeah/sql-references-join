@@ -20,23 +20,98 @@ By the end of this lesson, students should be able to:
 
 -   [An introduction to relational databases](https://github.com/ga-wdi-boston/sql-crud)
 
-## Introduction
+## Putting the 'Relation' in 'Relational Database'
 
-We've been talking about relational databases but haven't yet
- specified what constitutes a relationship.
+In conversations about Postgres, SQL and the like,
+ you may hear the term **_relational database_** thrown around.
+In the previous material on SQL,
+ you learned how to create, modify, and destroy rows and tables.
+How do 'relationships' (whatever that means) fit into that context?
 
-In an RDBMS, relationships between tables are specified with a `FOREIGN KEY`
- constraint on a column in one table that `REFERENCES` the `PRIMARY KEY`
- constraint on the `id` column of another table.
-An `INDEX` is usually added to the foreign key column
- to speed access to matched rows.
+Suppose that we had two separate tables of information in our database,
+`developers` and `lunches` (see below).
+Each developer brings their own lunch,
+ and none of them want to eat each others' lunches,
+ so we have to make sure that each lunch lines up with the right developer.
+How might we do that?
 
-This reference and index tells the RDBMS how you intend to use related tables.
+**developers**
 
-There are a number of standard cardinalities for relationships:
- 1-to-1, 1-to-(0 or 1), 1-to-(0 or more), and (0 or more)-to-(0 or more).
-The last two are more frequently called 1-to-many and many-to-many.
-We'll look at this last type of relationship in a following lesson.
+| id | given_name | surname  | favorite language |
+|:--:|:----------:|:--------:|:-----------------:|
+|  1 | Antony     | Donovan  | C                 |
+|  2 | Jason      | Weeks    | JavaScript        |
+|  3 | Jeff       | Horn     | Ruby              |
+|  4 | Matt       | Brendzel | LOLCODE           |
+
+**lunches**
+
+| id | main_course                          | side_dish          |
+|:--:|:------------------------------------:|:------------------:|
+|  1 | salmon and tuna sushi rolls          | chili              |
+|  2 | cheese sandwich on gluten-free bread | salad              |
+|  3 | roast beef sandwich                  | chips              |
+|  4 | chicken sandwich                     | steamed vegetables |
+
+What if we were to put nametags on each of the lunches,
+ so that we could know which developer brought which lunch?
+
+**lunches**
+
+| id | developer | main_course                          | side_dish          |
+|:--:|:---------:|:------------------------------------:|:------------------:|
+|  1 | Jeff      | salmon and tuna sushi rolls          | chili              |
+|  2 | Antony    | cheese sandwich on gluten-free bread | salad              |
+|  3 | Matt      | roast beef sandwich                  | chips              |
+|  4 | Jason     | chicken sandwich                     | steamed vegetables |
+
+We've now associated (i.e. related)
+ each `lunch` record with a `developer` record.
+But what if another developer with a duplicate name joins the mix?
+It might be better to use something unique, like the `id` column, instead.
+
+| id | developer_id | main_course                          | side_dish          |
+|:--:|:------------:|:------------------------------------:|:------------------:|
+|  1 |            3 | salmon and tuna sushi rolls          | chili              |
+|  2 |            1 | cheese sandwich on gluten-free bread | salad              |
+|  3 |            4 | roast beef sandwich                  | chips              |
+|  4 |            2 | chicken sandwich                     | steamed vegetables |
+
+The `developer_id` column refers to data in the `developers` table,
+ but it's actually a column in the `lunches` table.
+This is what's known as a **foreign key**.
+
+In terms of actual implementation in an **RDBMS**
+ ( _relational database management system_ ),
+ a column can be defined as holding foreign keys
+ using a modifier on a table definition called a **constraint**.
+Some examples of constraints are below.
+
+-   NOT NULL
+-   UNIQUE
+-   PRIMARY KEY
+-   FOREIGN KEY
+-   CHECK
+
+Each of these constraints allows you to put some bounds
+on the values that can be put into specific columns.
+The FOREIGN KEY constraint in particular makes sure that
+ values in that column are always valid `id` values
+ in the table that the column refers to.
+
+When adding a FOREIGN KEY constraint to a column,
+ an INDEX constraint is also usually added to that same column
+ in order to speed access to matched rows.
+ The combination of FOREIGN KEY and INDEX tells the RDBMS
+ how you intend to use the tables you've related.
+
+In the 'developers and lunches' example,
+one lunch was associated with one developer.
+This is called a **1 to 1** relationship.
+However, there are several other possible arangements,
+including **1 to (0 or 1)**, **1 to (0+)**, and **(0+) to (0+)**.
+The last two are frequently called 'one-to-many' and 'many-to-many';
+we'll look at the first of these now, and the second in later materials.
 
 ## Create a Database
 
