@@ -195,6 +195,11 @@ ALTER TABLE people
 ;
 ```
 
+### Lab : Create a Foreign Key
+
+Write SQL code inside `alter_table/pets.sql`
+that adds an owner reference to the pets table.
+
 -   [Constraints](http://www.postgresql.org/docs/9.4/static/ddl-constraints.html) -
  An overview of the variety of constraints that PostgreSQL provides.
 -   [CREATE TABLE](http://www.postgresql.org/docs/9.4/static/sql-createtable.html) -
@@ -209,9 +214,6 @@ ALTER TABLE people
  detailed documentation of PostgreSQL's version of the
   SQL `CREATE INDEX` command.
 
-### Practice : Create a Foreign Key
-
-We'll add an owner reference to the pets table.
 
 ---
 
