@@ -145,11 +145,31 @@ sql-join=>
 
 ## Create a Foreign Key
 
-We'll use the convention that a foreign key should be named for the singular of
- the table referenced with the column referenced appended after an underscore.
+### Demo : Create a Foreign Key
+
+Take a look at how a foreign key can be added to an existing table: `people`.
+Specifically, we'll add a reference to the city in which each person was born.
+
+Adding a new foreign key column is just like adding any other new column --
+it's an `ALTER TABLE` operation.
+
+**alter_table/people.sql**
+
+```sql
+ALTER TABLE people
+  ADD COLUMN born_in_id INTEGER REFERENCES cities(id)
+;
+```
+
+Conventionally, a foreign key is named
+ for the singular of the name of the table being referenced,
+ with the column being referenced appended after an underscore.
 So, if we're adding a reference to the `cities` table and its `id` column we'll
- create a column called `city_id`.  This convention should not be followed when
- there is a semantically superior name available.
+ create a column called `city_id`.
+However, _this convention should not be followed
+ when there is a semantically superior name available._
+In this case, `born_in_id` is a more appropriate name than `city_id`
+ for the column.
 
 -   [Constraints](http://www.postgresql.org/docs/9.4/static/ddl-constraints.html) -
  An overview of the variety of constraints that PostgreSQL provides.
@@ -164,12 +184,6 @@ So, if we're adding a reference to the `cities` table and its `id` column we'll
 -   [CREATE INDEX](http://www.postgresql.org/docs/9.4/static/sql-createindex.html) -
  detailed documentation of PostgreSQL's version of the
   SQL `CREATE INDEX` command.
-
-### Demo : Create a Foreign Key
-
-We'll add a place of birth to people which references a city in the city table.
-We'll use born_in_id as the column name, rather than city_id,
- as this is a more semantic name for the column.
 
 ### Code Along : Create a Foreign Key
 
