@@ -249,30 +249,117 @@ Finally, for each one of these 'pet hoarders',
 
 ---
 
-## Retrieving Rows Across Related Tables
+## Read Data Across Related Tables
 
-The `join` allows queries to return associated data from two tables as
+### Demo : Read Data Across Related Tables
+
+Now that our rows are related,
+ it would be nice if we could read across multiple tables at once -
+ for instance, to see how many people lived in some particular city.
+
+One possible way to accomplish this is to add a special clause,
+ called a JOIN clause,
+ to a SELECT command;
+ this allows queries to return associated data from two tables as
  a single row.
 
--   [Joins Between Tables](http://www.postgresql.org/docs/9.4/static/tutorial-join.html) -
- An introduction to querying multiple tables
--   [SELECT](http://www.postgresql.org/docs/9.4/static/sql-select.html) -
- detailed documentation of PostgreSQL's version of the SQL `SELECT` command.
+```sql
+SELECT c.name, COUNT(*)
+  FROM people p
+  INNER JOIN cities c ON p.born_in_id = c.id
+    GROUP BY c.name
+    HAVING COUNT(*) > 1
+  -- list cities by how many people were born there
+  -- and only show cities where more than one person was born
+;
+```
 
-### Demo : Retrieving Rows Across Related Tables
+Depending on the type of JOIN we use,
+ we can grab different sets of rows from one table or the other.
+An 'inner join' of two tables, A and B, grabs only those rows in table A
+ that have a matching row in table B, and vice versa.
+Thus, if we're using an INNER JOIN, we can even reverse the order of the tables
+ without changing anything.
 
-We'll count all the people by place of birth.
-Then we'll look at information about people born in a particular city or cities.
+```sql
+SELECT c.name, COUNT(*)
+  FROM cities c
+  INNER JOIN people p ON p.born_in_id = c.id
+    GROUP BY c.name
+    HAVING COUNT(*) > 1
+  -- list cities by how many people were born there
+  -- and only show cities where more than one person was born
+;
+```
 
-### Code Along : Retrieving Rows Across Related Tables
+We could also look at people born in a particular city.
 
-We'll query people, the associated addresses,
- and the cities associated with those addresses.
+```sql
+SELECT p.given_name, p.surname
+  FROM people p
+  INNER JOIN cities c ON p.born_in_id = c.id
+    WHERE c.name = 'Somerville'
+;
+```
 
-### Practice : Retrieving Rows Across Related Tables
+### Code Along : Read Data Across Related Tables
 
-Let's check for hoarders.
-That's anyone with more than 3 dogs, 4 birds, 5, cats, or 20 fish.
+Let's write some queries that focus on people, addresses, and cities.
+
+We'll run the script in `update/addresses.sql` to
+arbitrarily associates addresses with cities.
+
+To get a list of all people, along with their address and city,
+we could write
+
+```sql
+SELECT p.surname, p.given_name, a.name AS street, c.name AS city, c.country
+  FROM people p
+  INNER JOIN addresses a  ON p.address_id = a.id
+  INNER JOIN cities c     ON a.city_id = c.id
+;
+```
+
+To limit the results to only those people living in Germany,
+we could write:
+
+```sql
+SELECT p.surname, p.given_name, a.name AS street, c.name AS city, c.country
+  FROM people p
+  INNER JOIN addresses a  ON p.address_id = a.id
+  INNER JOIN cities c     ON a.city_id = c.id
+    WHERE c.country = 'DE'
+;
+```
+
+### Practice : Read Data Across Related Tables
+
+Run this script to arbitrarily assign pets to people.
+
+```sql
+UPDATE pets
+  SET owner_id = 7
+    WHERE kind = 'fish' AND name LIKE 'S%'
+;
+
+UPDATE pets
+  SET owner_id = 11
+    WHERE kind = 'bird'
+;
+
+UPDATE pets
+  SET owner_id = 21
+   WHERE kind = 'cat'
+;
+
+UPDATE pets
+  SET owner_id = 42
+    WHERE kind = 'dog'
+;
+```
+
+Now use SELECT to come up with a list of all of the hoarders -
+that's anyone with more than 3 dogs, 4 birds, 5, cats, or 20 fish.
 
 ---
 
@@ -296,3 +383,7 @@ That's anyone with more than 3 dogs, 4 birds, 5, cats, or 20 fish.
 -   [INSERT](http://www.postgresql.org/docs/9.4/static/sql-insert.html) -
  detailed documentation of PostgreSQL's version of the
   SQL `INSERT INTO` command.
+-   [Joins Between Tables](http://www.postgresql.org/docs/9.4/static/tutorial-join.html) -
+ An introduction to querying multiple tables
+-   [SELECT](http://www.postgresql.org/docs/9.4/static/sql-select.html) -
+ detailed documentation of PostgreSQL's version of the SQL `SELECT` command.
