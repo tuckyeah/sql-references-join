@@ -241,7 +241,7 @@ UPDATE people AS p        -- alias `people` as p
 
 ### Lab : Relate Rows in Different Tables
 
-Use UPDATE to set the owner reference for some existing pets.
+Define owner references for some existing pets.
 Then, pick at least two people to be folks with too many pets --
  these people should have large numbers of pets associated with them.
 Finally, for each one of these 'pet hoarders',
