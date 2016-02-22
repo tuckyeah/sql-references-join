@@ -200,30 +200,52 @@ ALTER TABLE people
 Write SQL code inside `alter_table/pets.sql`
 that adds an owner reference to the pets table.
 
-
 ---
 
-## Explicit Relationships Between Different Tables
+## Relate Rows in Different Tables
 
-We'll update or insert rows with appropriate values.
+### Demo : Relate Rows in Different Tables
+
+Now that we've created some foreign key columns,
+ it's possible to insert new rows into those tables
+ that reference other tables,
+ or even to update existing rows and add new references that way.
+We could easily do this with the `born_in_id` column we just created.
+
 Note that a foreign key constraint will disallow invalid values
  in the referencing column.
 
+### Code Along : Relate Rows in Different Tables
 
-### Demo : Explicit Relationships Between Different Tables
+We'll start by inserting a new address into the `addresses` table
+ that's associated with Somerville.
 
-We'll set the place of birth for some people.
+```sql
+INSERT INTO addresses(no,name, city_id)
+  VALUES (255, 'Elm Street', 1)
+  -- In `cities`, Somerville has an ID of 1
+;
+```
 
-### Code Along : Explicit Relationships Between Different Tables
+Next, let's load up all the addresses from `addresses.csv`;
+ once those are loaded, we can then update the `people` table
+ by associating people with some of those new addresses.
 
-We'll insert an address associated with Somerville.
-Then we'll bulk load addresses and connect some of them to cities.
-After that, we'll set some people's current addresses.
+```sql
+UPDATE people AS p        -- alias `people` as p
+  SET address_id = a.id
+    FROM addresses AS a   -- alias `addresses` as a
+      WHERE a.id = p.id   -- arbitarily associate person 1 with address 1
+;
+```
 
-### Practice : Explicit Relationships Between Different Tables
+### Lab : Relate Rows in Different Tables
 
-We'll set the owner reference for some pets.
-Pick at least two people to be folks with too many pets.
+Use UPDATE to set the owner reference for some existing pets.
+Then, pick at least two people to be folks with too many pets --
+ these people should have large numbers of pets associated with them.
+Finally, for each one of these 'pet hoarders',
+ add a new pet and associate it with a hoarder.
 
 ---
 
