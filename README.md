@@ -332,9 +332,9 @@ SELECT p.surname, p.given_name, a.name AS street, c.name AS city, c.country
 ;
 ```
 
-### Practice : Read Data Across Related Tables
+### Lab : Read Data Across Related Tables
 
-Run this script to arbitrarily assign pets to people.
+Run this SQL code to arbitrarily assign pets to people.
 
 ```sql
 UPDATE pets
