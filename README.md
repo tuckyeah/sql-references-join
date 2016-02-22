@@ -359,7 +359,9 @@ UPDATE pets
 ```
 
 Now use SELECT to come up with a list of all of the hoarders -
-that's anyone with more than 3 dogs, 4 birds, 5, cats, or 20 fish.
+that's anyone with more than 3 dogs, 4 birds, 5 cats, or 20 fish.
+
+> HINT: Look up UNION and see what it does.
 
 ---
 
