@@ -153,14 +153,6 @@ Specifically, we'll add a reference to the city in which each person was born.
 Adding a new foreign key column is just like adding any other new column --
 it's an `ALTER TABLE` operation.
 
-**alter_table/people.sql**
-
-```sql
-ALTER TABLE people
-  ADD COLUMN born_in_id INTEGER REFERENCES cities(id)
-;
-```
-
 Conventionally, a foreign key is named
  for the singular of the name of the table being referenced,
  with the column being referenced appended after an underscore.
