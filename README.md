@@ -200,20 +200,6 @@ ALTER TABLE people
 Write SQL code inside `alter_table/pets.sql`
 that adds an owner reference to the pets table.
 
--   [Constraints](http://www.postgresql.org/docs/9.4/static/ddl-constraints.html) -
- An overview of the variety of constraints that PostgreSQL provides.
--   [CREATE TABLE](http://www.postgresql.org/docs/9.4/static/sql-createtable.html) -
- detailed documentation of PostgreSQL's version of
- the SQL `CREATE TABLE` command.
--   [ALTER TABLE](http://www.postgresql.org/docs/9.4/static/sql-altertable.html) -
- detailed documentation of PostgreSQL's version of the
- SQL `ALTER TABLE` command.
--   [Index Introduction](http://www.postgresql.org/docs/9.4/static/indexes-intro.html) -
- The introductory section of the chapter on indexes in PostgreSQL.
--   [CREATE INDEX](http://www.postgresql.org/docs/9.4/static/sql-createindex.html) -
- detailed documentation of PostgreSQL's version of the
-  SQL `CREATE INDEX` command.
-
 
 ---
 
@@ -223,11 +209,6 @@ We'll update or insert rows with appropriate values.
 Note that a foreign key constraint will disallow invalid values
  in the referencing column.
 
--   [UPDATE](http://www.postgresql.org/docs/9.4/static/sql-update.html) -
- detailed documentation of PostgreSQL's version of the SQL `UPDATE` command.
--   [INSERT](http://www.postgresql.org/docs/9.4/static/sql-insert.html) -
- detailed documentation of PostgreSQL's version of the
-  SQL `INSERT INTO` command.
 
 ### Demo : Explicit Relationships Between Different Tables
 
@@ -272,3 +253,24 @@ Let's check for hoarders.
 That's anyone with more than 3 dogs, 4 birds, 5, cats, or 20 fish.
 
 ---
+
+## References
+
+-   [Constraints](http://www.postgresql.org/docs/9.4/static/ddl-constraints.html) -
+ An overview of the variety of constraints that PostgreSQL provides.
+-   [CREATE TABLE](http://www.postgresql.org/docs/9.4/static/sql-createtable.html) -
+ detailed documentation of PostgreSQL's version of
+ the SQL `CREATE TABLE` command.
+-   [ALTER TABLE](http://www.postgresql.org/docs/9.4/static/sql-altertable.html) -
+ detailed documentation of PostgreSQL's version of the
+ SQL `ALTER TABLE` command.
+-   [Index Introduction](http://www.postgresql.org/docs/9.4/static/indexes-intro.html) -
+ The introductory section of the chapter on indexes in PostgreSQL.
+-   [CREATE INDEX](http://www.postgresql.org/docs/9.4/static/sql-createindex.html) -
+ detailed documentation of PostgreSQL's version of the
+  SQL `CREATE INDEX` command.
+-   [UPDATE](http://www.postgresql.org/docs/9.4/static/sql-update.html) -
+ detailed documentation of PostgreSQL's version of the SQL `UPDATE` command.
+-   [INSERT](http://www.postgresql.org/docs/9.4/static/sql-insert.html) -
+ detailed documentation of PostgreSQL's version of the
+  SQL `INSERT INTO` command.
