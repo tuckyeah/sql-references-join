@@ -171,6 +171,38 @@ However, _this convention should not be followed
 In this case, `born_in_id` is a more appropriate name than `city_id`
  for the column.
 
+### Code Along : Create a Foreign Key
+
+Let's try creating some more foreign keys.
+First, let's create an `addresses` table which references the `cities` table.
+
+In the `data` directory,
+ there's a CSV file called `addresses.csv` with a lot of address data in it.
+The columns are 'no' (i.e. number) and 'name',
+ so let's represent these columns as INTEGER and CHARACTER VARYING / VARCHAR,
+ respectively.
+As mentioned, we also want each address to reference the city that it's in,
+ so let's add another column to do that.
+
+```sql
+CREATE TABLE addresses(
+  id SERIAL PRIMARY KEY,
+  no INTEGER,
+  name VARCHAR, -- CHARACTER VARYING
+  city_id INTEGER REFERENCES cities -- defaults to (id)
+);
+```
+
+Let's do another;
+ this time we'll add a reference
+ from the `people` table to the `addresses` table.
+
+```sql
+ALTER TABLE people
+  ADD COLUMN address_id INTEGER REFERENCES addresses
+;
+```
+
 -   [Constraints](http://www.postgresql.org/docs/9.4/static/ddl-constraints.html) -
  An overview of the variety of constraints that PostgreSQL provides.
 -   [CREATE TABLE](http://www.postgresql.org/docs/9.4/static/sql-createtable.html) -
@@ -184,11 +216,6 @@ In this case, `born_in_id` is a more appropriate name than `city_id`
 -   [CREATE INDEX](http://www.postgresql.org/docs/9.4/static/sql-createindex.html) -
  detailed documentation of PostgreSQL's version of the
   SQL `CREATE INDEX` command.
-
-### Code Along : Create a Foreign Key
-
-We'll create an addresses table which references the cities table.
-Then we'll add a reference from the people table to the addresses table.
 
 ### Practice : Create a Foreign Key
 
