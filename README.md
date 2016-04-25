@@ -41,8 +41,8 @@ How might we do that?
 |:--:|:----------:|:--------:|:-----------------:|
 |  1 | Antony     | Donovan  | C                 |
 |  2 | Jason      | Weeks    | JavaScript        |
-|  3 | Jeff       | Horn     | Ruby              |
-|  4 | Matt       | Brendzel | LOLCODE           |
+|  3 | Lauren     | Fazah    | Ruby              |
+|  4 | Ross       | Degnen   | LOLCODE           |
 
 **lunches**
 
@@ -60,9 +60,9 @@ What if we were to put nametags on each of the lunches,
 
 | id | developer | main_course                          | side_dish          |
 |:--:|:---------:|:------------------------------------:|:------------------:|
-|  1 | Jeff      | salmon and tuna sushi rolls          | chili              |
+|  1 | Lauren    | salmon and tuna sushi rolls          | chili              |
 |  2 | Antony    | cheese sandwich on gluten-free bread | salad              |
-|  3 | Matt      | roast beef sandwich                  | chips              |
+|  3 | Ross      | roast beef sandwich                  | chips              |
 |  4 | Jason     | chicken sandwich                     | steamed vegetables |
 
 We've now associated (i.e. related)
@@ -153,15 +153,12 @@ Specifically, we'll add a reference to the city in which each person was born.
 Adding a new foreign key column is just like adding any other new column --
 it's an `ALTER TABLE` operation.
 
-Conventionally, a foreign key is named
- for the singular of the name of the table being referenced,
- with the column being referenced appended after an underscore.
-So, if we're adding a reference to the `cities` table and its `id` column we'll
- create a column called `city_id`.
-However, _this convention should not be followed
- when there is a semantically superior name available._
-In this case, `born_in_id` is a more appropriate name than `city_id`
- for the column.
+ Watch as i:
+
+ -   Create a `people` table
+ -   Create a `cities` table
+ -   Alter `people` table to have `born_in_id` and relate it to the `cities`
+ table.
 
 ### Code Along : Create a Foreign Key
 
@@ -185,7 +182,7 @@ CREATE TABLE addresses(
 );
 ```
 
-Let's do another;
+Now we're going to alter the table a bit;
  this time we'll add a reference
  from the `people` table to the `addresses` table.
 
@@ -197,8 +194,9 @@ ALTER TABLE people
 
 ### Lab : Create a Foreign Key
 
-Write SQL code inside `alter_table/pets.sql`
-that adds an owner reference to the pets table.
+Write SQL code inside the various script files that adds an owner reference to
+the pets table.  You will need to repeat many of the steps we have just
+performed in order to do this.
 
 ---
 
@@ -206,14 +204,16 @@ that adds an owner reference to the pets table.
 
 ### Demo : Relate Rows in Different Tables
 
-Now that we've created some foreign key columns,
- it's possible to insert new rows into those tables
- that reference other tables,
- or even to update existing rows and add new references that way.
-We could easily do this with the `born_in_id` column we just created.
+Now that we've created some foreign key columns, it's possible to insert new
+rows into those tables that reference other tables, or even to update existing
+rows and add new references that way. We could easily do this with the
+born_in_id column we just created.
 
-Note that a foreign key constraint will disallow invalid values
- in the referencing column.
+Note that a foreign key constraint will disallow invalid values in the
+referencing column.
+
+-   Insets a city into the `cities` table
+-   Insert a person in the `people` table that refrences a the city
 
 ### Code Along : Relate Rows in Different Tables
 
@@ -227,9 +227,30 @@ INSERT INTO addresses(no,name, city_id)
 ;
 ```
 
-Next, let's load up all the addresses from `addresses.csv`;
- once those are loaded, we can then update the `people` table
- by associating people with some of those new addresses.
+Let's check to make sure we updated the entry:
+
+```sql
+SELECT name FROM addresses WHERE city_id = 1;
+```
+
+Now that we have created the table let's bulk upload the data. In
+`bulk_load/addresses.psql` write the command to bull upload information from
+the addresses csv file.
+
+```bash
+\copy addresses(no,name) from 'data/addresses.csv' with(header true, format csv)
+```
+
+and in psql let's run the script
+
+```bash
+\i <path/to/file>
+```
+
+Let's bulk upload some people using the same process as well.
+
+Now update the `people` table
+ by associating people with some addresses.
 
 ```sql
 UPDATE people AS p        -- alias `people` as p
@@ -238,6 +259,9 @@ UPDATE people AS p        -- alias `people` as p
       WHERE a.id = p.id   -- arbitarily associate person 1 with address 1
 ;
 ```
+
+You people IDs and address IDs may not be in sync, you may need to do some math
+here.
 
 ### Lab : Relate Rows in Different Tables
 
@@ -263,14 +287,23 @@ One possible way to accomplish this is to add a special clause,
  this allows queries to return associated data from two tables as
  a single row.
 
+Note: The number may vary here due to IDs in the database, and the math you
+used earlier.
+
 ```sql
 SELECT c.name, COUNT(*)
   FROM people p
   INNER JOIN cities c ON p.born_in_id = c.id
     GROUP BY c.name
-    HAVING COUNT(*) > 1
   -- list cities by how many people were born there
-  -- and only show cities where more than one person was born
+;
+```
+
+```sql
+SELECT c.name, COUNT(*)
+  FROM people p
+  INNER JOIN cities c ON p.address_id = c.id
+    GROUP BY c.name
 ;
 ```
 
@@ -286,9 +319,7 @@ SELECT c.name, COUNT(*)
   FROM cities c
   INNER JOIN people p ON p.born_in_id = c.id
     GROUP BY c.name
-    HAVING COUNT(*) > 1
   -- list cities by how many people were born there
-  -- and only show cities where more than one person was born
 ;
 ```
 
@@ -307,28 +338,16 @@ SELECT p.given_name, p.surname
 Let's write some queries that focus on people, addresses, and cities.
 
 We'll run the script in `update/addresses.sql` to
-arbitrarily associates addresses with cities.
+arbitrarily associates addresses with cities.  Be sure to check that the people
+IDs and addresses correctly align.
 
 To get a list of all people, along with their address and city,
 we could write
 
 ```sql
-SELECT p.surname, p.given_name, a.name AS street, c.name AS city, c.country
+SELECT p.surname, p.given_name, a.name AS street
   FROM people p
   INNER JOIN addresses a  ON p.address_id = a.id
-  INNER JOIN cities c     ON a.city_id = c.id
-;
-```
-
-To limit the results to only those people living in Germany,
-we could write:
-
-```sql
-SELECT p.surname, p.given_name, a.name AS street, c.name AS city, c.country
-  FROM people p
-  INNER JOIN addresses a  ON p.address_id = a.id
-  INNER JOIN cities c     ON a.city_id = c.id
-    WHERE c.country = 'DE'
 ;
 ```
 
