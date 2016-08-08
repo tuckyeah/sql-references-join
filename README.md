@@ -11,7 +11,6 @@ Fork and clone this repository.
 By the end of this lesson, students should be able to:
 
 -   Add a foreign key reference to an existing table.
--   Create a table with a foreign key reference.
 -   Insert a row which includes a reference to the id of a row in another table.
 -   Update a row setting a reference to the id of a row in another table.
 -   Retrieve rows from two tables using a `JOIN` condition
@@ -134,7 +133,7 @@ psql
 psql (9.4.5)
 Type "help" for help.
 
-wdi=> CREATE DATABASE "sq-join" TEMPLATE "sql-crud";
+wdi=> CREATE DATABASE "sql-join" TEMPLATE "sql-crud";
 CREATE DATABASE
 wdi=> \c sql-join
 You are now connected to database "sql-join" as user "wdi".
@@ -155,9 +154,9 @@ it's an `ALTER TABLE` operation.
 
  Watch as i:
 
- -   Create a `people` table
- -   Create a `cities` table
- -   Alter `people` table to have `born_in_id` and relate it to the `cities`
+-   Create a `people` table
+-   Create a `cities` table
+-   Alter `people` table to have `born_in_id` and relate it to the `cities`
  table.
 
 ### Code Along : Create a Foreign Key
